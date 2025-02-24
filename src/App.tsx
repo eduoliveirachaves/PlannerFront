@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AuthLayout from "./layouts/AuthLayout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
 
 export default function App() {
   return (
@@ -14,7 +15,7 @@ export default function App() {
         </Route>
 
         {/* Protected Main App Route */}
-        {/*<Route path="/" element={<Dashboard />} />*/}
+        <Route path="/" element={<Dashboard />} />
       </Routes>
     </Router>
   );
