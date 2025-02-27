@@ -1,0 +1,16 @@
+.loading-page {
+    display: flex;
+    /* border: 1px white solid; */
+    flex-direction: column;
+    height: 50vh;
+    width: 80vw;
+    padding: auto;
+    margin: 50px auto;
+}
+
+.loading-page div {
+    /* border: 1px white solid; */
+    height: auto;
+    width: auto;
+    margin: auto;
+}

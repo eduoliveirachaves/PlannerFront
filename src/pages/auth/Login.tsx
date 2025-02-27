@@ -1,11 +1,14 @@
-import { login } from "../api/Main";
-import { useState, FormEvent } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useState, FormEvent, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
+
+  const { login } = authContext;
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
