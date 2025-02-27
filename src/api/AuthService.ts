@@ -1,9 +1,4 @@
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: "http://localhost:3000/api",
-  withCredentials: true,
-});
+import api from "./ApiSetup.ts";
 
 export async function login(email: string, password: string) {
   try {
@@ -19,6 +14,8 @@ export async function login(email: string, password: string) {
     );
 
     console.log(response.data);
+
+    
   } catch (error) {
     console.error("Login failed:", error);
     throw error;
@@ -55,10 +52,7 @@ export async function registerUser(
 
 export async function test() {
   try {
-    const response = await api.get("/user/me", {
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const response = await api.get("/auth/check", {
       withCredentials: true,
     });
 
@@ -68,4 +62,9 @@ export async function test() {
     throw error;
   }
 }
-export default api;
+
+export async function logout() {
+  await api.post("/auth/logout", {
+    withCredentials: true
+  })
+}

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { registerUser } from "../api/Main";
+import { registerUser } from "../../api/AuthService.ts";
 
 export default function Register() {
   const [name, setName] = React.useState("");
