@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import AuthLayout from "./layouts/AuthLayout";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Dashboard from "./pages/Dashboard";
@@ -13,7 +12,7 @@ export default function App() {
       <Router>
         <Routes>
           {/* Auth Layout for authentication pages - Public */}
-          <Route element={<AuthLayout />}>
+          <Route>
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
           </Route>
