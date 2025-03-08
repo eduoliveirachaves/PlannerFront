@@ -17,9 +17,9 @@ export default function App() {
             <Route path="register" element={<Register />} />
           </Route>
 
-          <Route path="/" element={<Dashboard />} />
           {/* Protected Main App Route */}
           <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<Dashboard />} />
             <Route path="/user/profile" element={<Profile />} />
           </Route>
         </Routes>

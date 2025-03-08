@@ -1,25 +1,16 @@
 import api from "./ApiSetup.ts";
 
 export async function login(email: string, password: string) {
-  try {
-    const response = await api.post(
-      "/auth/login",
-      { email, password },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true, // Ensure credentials are included
+  return await api.post(
+    "/auth/login",
+    { email, password },
+    {
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
-
-    console.log(response.data);
-
-    
-  } catch (error) {
-    console.error("Login failed:", error);
-    throw error;
-  }
+      withCredentials: true, // Ensure credentials are included
+    },
+  );
 }
 
 export async function registerUser(
@@ -27,44 +18,35 @@ export async function registerUser(
   email: string,
   password: string,
 ) {
-  try {
-    const response = await api.post(
-      "/user/register",
-      {
-        name,
-        email,
-        password,
+  return await api.post(
+    "/user/register",
+    {
+      name,
+      email,
+      password,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
       },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      },
-    );
-
-    console.log(response.data);
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+      withCredentials: true,
+    },
+  );
 }
 
-export async function test() {
+export async function check() {
   try {
-    const response = await api.get("/auth/check", {
+    await api.get("/auth/check", {
       withCredentials: true,
     });
-
-    console.log(response.data);
   } catch (error) {
-    console.error(error);
+    console.error("CHECK FAILED USER IS NOT AUTH : " + error);
     throw error;
   }
 }
 
 export async function logout() {
   await api.post("/auth/logout", {
-    withCredentials: true
-  })
+    withCredentials: true,
+  });
 }

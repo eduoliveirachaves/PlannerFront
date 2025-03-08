@@ -4,15 +4,15 @@ import axios from "axios";
 const api = axios.create({
   baseURL: "http://localhost:3000/api",
   withCredentials: true, // Enables cookies in requests
+  timeout: 10000,
 });
 
-// Automatically handle 401 (Unauthorized) errors
+// Automatically handle 403 (Unauthorized) errors
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 403) {
       // If 403, remove auth state (logout the user)
-      localStorage.removeItem("isAuthenticated"); // i have not implemented localStorage // this is doing nothing
       window.location.href = "/login"; // Redirect to login
     }
     return Promise.reject(error);

@@ -10,26 +10,30 @@ export default function Login() {
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
 
-  const { login /*, isAuthenticated  */ } = authContext;
+  const { login } = authContext;
 
-  /*useEffect(() => {
-    const autoRedirect = () => {
-      if (isAuthenticated) {
-        console.log("ALREADY AUTHENTICATED");
-        navigate("/");
-      }
-    };
-    autoRedirect();
-  }, []); */
+  //AUTO REDIRECT
+
+  // useEffect(() => {
+  //   const autoRedirect = async () => {
+  //     try {
+  //       await check();
+  //       console.log("Already authenticated!!!");
+  //       navigate("/");
+  //     } catch (err) {
+  //       console.log("not logged yet" + err);
+  //     }
+  //   };
+  //   autoRedirect();
+  // }, []);
 
   async function handleLogin(e: FormEvent) {
     e.preventDefault();
-    console.log("Form submitted");
     try {
       await login(email, password);
       navigate("/");
     } catch (error) {
-      console.error(error);
+      console.error("ERRO AO LOGAR<> : " + error);
     }
   }
 

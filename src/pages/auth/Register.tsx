@@ -1,21 +1,39 @@
 import * as React from "react";
-import { registerUser } from "../../api/AuthService.ts";
+import { useContext } from "react";
+import { registerUser } from "@/api/AuthService.ts";
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { Card, CardHeader, CardContent, CardTitle} from "@/components/ui/card.tsx";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card.tsx";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "@/context/AuthContext.tsx";
 
 export default function Register() {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { login } = auth;
 
-  const navigate = useNavigate()
-
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     console.log("Form submitted");
-    registerUser(name, email, password);
+    try {
+      await registerUser(name, email, password);
+      await login(email, password);
+
+      navigate("/");
+    } catch (error) {
+      console.error("NAO FOI POSSIVEL CRIAR : " + error);
+    }
+    setName("");
+    setEmail("");
+    setPassword("");
   }
 
   return (

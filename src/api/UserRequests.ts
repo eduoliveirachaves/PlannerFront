@@ -15,7 +15,6 @@ export const getProfile = async () => {
 
     return user;
   } catch (error) {
-    console.error(error);
-    return null;
+    console.error("ERROR GETTING PROFILE: " + error);
   }
 };
