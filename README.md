@@ -1,50 +1,57 @@
-# React + TypeScript + Vite
+# Planner Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend for the Planner application, built with React and TypeScript. It provides a user-friendly interface
+for managing tasks and schedules.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- User authentication with JWT
+- Task management (create, update, delete, mark as completed)
+- Category-based task organization
+- Deadline reminders
+- Responsive UI
+- API integration with the backend
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React** (with TypeScript)
+- **Vite** (for fast builds and development)
+- **React Query** (for data fetching and caching)
+- **Tailwind CSS** (for styling)
+- **React Router** (for navigation)
+- **Axios** (for API requests)
 
-- Configure the top-level `parserOptions` property like this:
+## API Integration
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+The frontend interacts with the backend API to perform user authentication and task management. Ensure the backend is
+running and accessible at the configured API URL.
+
+### Environment Variables
+
+Create a `.env` file in the project root with the following variables:
+
+```
+VITE_API_BASE_URL=http://localhost:3000/api
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Application Structure
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- `src/components/` - Reusable UI components
+- `src/pages/` - Main application pages
+- `src/api/` - API service functions
+- `src/context/` - Global state management
+- `src/hooks/` - Custom hooks
+- `src/utils/` - Helper functions
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Key Screens
+
+- **Login / Signup** - User authentication
+- **Dashboard** - Overview of tasks
+- **Task Management** - Create, edit, and delete tasks
+- **Settings** - User preferences
+
+## Notes
+
+- Ensure you have the correct API URL in the `.env` file.
+- Swagger documentation is available for the backend API at `http://localhost:8080/swagger-ui.html`.
+- The frontend is designed to be responsive and works across devices.
