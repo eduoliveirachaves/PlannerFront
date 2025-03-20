@@ -1,5 +1,5 @@
 import { AuthContext } from "../../context/AuthContext";
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,10 @@ export default function Login() {
 
   const { login } = authContext;
 
+
+  useEffect(() => {
+    document.title = "Login"
+  })
   //AUTO REDIRECT
 
   // useEffect(() => {

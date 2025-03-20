@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { registerUser } from "@/api/AuthService.ts";
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
@@ -19,6 +19,10 @@ export default function Register() {
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
   const { login } = auth;
+
+  useEffect(() => {
+    document.title = "Sign Up"
+  })
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
