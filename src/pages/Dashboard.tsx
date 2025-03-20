@@ -1,32 +1,19 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { createTask } from "@/api/TaskRequests.ts";
+import { createTask, getOneTimeTasks } from "@/api/TaskRequests.ts";
 import { Loading } from "@/pages/Loading.tsx";
 import { getProfile } from "@/api/UserRequests.ts";
 
 interface Task {
   id: number;
   title: string;
-  category: string;
-  deadline: string;
+  description: string;
+  type: string;
+  dueDate: string;
+  status: string;
+  schedule?: [];
 }
-
-const tasks: Task[] = [
-  {
-    id: 1,
-    title: "Finish React project",
-    category: "Work",
-    deadline: "2025-03-10",
-  },
-  {
-    id: 2,
-    title: "Buy groceries",
-    category: "Personal",
-    deadline: "2025-03-05",
-  },
-  { id: 3, title: "Workout", category: "Health", deadline: "2025-03-07" },
-];
 
 interface User {
   name: string;
@@ -41,8 +28,11 @@ export default function Home() {
   const [taskTitle, setTitle] = useState("");
   const [taskDescription, setDescription] = useState("");
   const [taskDeadline, setDeadline] = useState("");
+  const [tasks, setTasks] = useState<Task[]>([]);
+
 
   useEffect(() => {
+    document.title = "Dashboard";
     const profile = async () => {
       try {
         const req = await getProfile();
@@ -55,6 +45,17 @@ export default function Home() {
       }
     };
     profile();
+
+    const fetchTasks = async () => {
+      try {
+        const data = await getOneTimeTasks();
+        setTasks(data.data);
+      } catch (e) {
+        console.error("DASH BOARD CANNOT FETCH TASKS" + e);
+      }
+    };
+
+    fetchTasks();
   }, []);
 
   if (!user) {
@@ -72,9 +73,17 @@ export default function Home() {
   const handleSubmitTask = async (e: React.FormEvent) => {
     try {
       e.preventDefault();
-      console.log("HANDLE SUBMIT TASK");
-      const res = await createTask(taskTitle, taskDescription, taskDeadline);
-      console.log(" RESPONSE FORM HANDLE SUBMIT TASK " + res);
+      await createTask(taskTitle, taskDescription, taskDeadline);
+
+      const updatedTasks = await getOneTimeTasks();
+
+      setTasks(updatedTasks.data);
+
+      setTitle("");
+      setDeadline("");
+      setDescription("");
+
+      setIsFormVisible(false);
     } catch (err) {
       console.error("DASHBOARD : ERROR SENDING CREATE TASK " + err);
     }
@@ -89,18 +98,28 @@ export default function Home() {
         <h2 className="text-2xl font-semibold text-gray-300 mb-4">
           Your Tasks
         </h2>
-        <ul className="space-y-4">
-          {tasks.map((task) => (
-            <li
-              key={task.id}
-              className="p-4 rounded-lg bg-gray-700 border border-gray-600"
-            >
-              <p className="text-lg font-medium text-white">{task.title}</p>
-              <p className="text-sm text-gray-400">Category: {task.category}</p>
-              <p className="text-sm text-gray-400">Deadline: {task.deadline}</p>
-            </li>
-          ))}
-        </ul>
+        {/* se nao tiver nenhum item na lista retorna lista nao esta vazia */}
+        {tasks.length > 0 ? (
+          <ul className="space-y-4">
+            {tasks.map((task) => (
+              <li
+                key={task.id}
+                className="p-4 rounded-lg bg-gray-700 border border-gray-600"
+              >
+                <p className="text-lg font-medium text-white">{task.title}</p>
+                <p className="text-sm text-gray-400">
+                  Description: {task.description}
+                </p>
+                <p className="text-sm text-gray-400">
+                  Deadline: {task.dueDate}
+                </p>
+                <p className="text-sm text-gray-400">Type: {task.type}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div>LISTA ESTA VAZIA</div>
+        )}
         <Button
           onClick={handleCreateTask}
           className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 mt-6 rounded-lg shadow-md"
